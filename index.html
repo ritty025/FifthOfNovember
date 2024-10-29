@@ -31,6 +31,8 @@
             padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
+            filter: blur(20px); /* Initially blur the content */
+            transition: filter 0.3s ease;
         }
 
         .grid-item {
@@ -67,11 +69,27 @@
         .grid-item:hover .overlay {
             opacity: 1;
         }
+
+        .password-form {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <h1>Happy Anniversary!</h1>
-    <div class="grid-container">
+    
+    <div class="password-form">
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="checkPassword()">Submit</button>
+        <p id="message" style="color: red;"></p>
+    </div>
+
+    <div class="grid-container" id="memories">
         <!-- Add your images and videos here -->
         <div class="grid-item">
             <img src="your-image1.jpeg" alt="Memory 1">
@@ -83,5 +101,19 @@
         </div>
         <!-- Repeat for more items -->
     </div>
+
+    <script>
+        function checkPassword() {
+            var password = document.getElementById("password").value;
+            var correctPassword = "sidandriti"; // Replace with your actual password
+            
+            if (password === correctPassword) {
+                document.getElementById("memories").style.filter = "blur(0)"; // Remove blur
+                document.getElementById("message").innerText = ""; // Clear message
+            } else {
+                document.getElementById("message").innerText = "Incorrect password, try again!";
+            }
+        }
+    </script>
 </body>
 </html>
