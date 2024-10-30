@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Well Do You Know Each Other?</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 20px;
+    }
+    
+    h1 {
+        color: #333;
+    }
+    
+    .question {
+        margin-bottom: 15px;
+    }
+    
+    button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    
+    #result {
+        margin-top: 20px;
+        font-size: 20px;
+    }
+</style>
+
+</head>
+<body>
+    <h1>How Well Do You Know Each Other?</h1>
+    <form id="quizForm">
+        <div class="question">
+            <label>What's my favorite color?</label><br>
+            <input type="radio" name="q1" value="correct"> Blue<br>
+            <input type="radio" name="q1" value="wrong"> Green<br>
+            <input type="radio" name="q1" value="wrong"> Red<br>
+        </div>
+
+        <div class="question">
+            <label>Where did we first meet?</label><br>
+            <input type="radio" name="q2" value="wrong"> At a coffee shop<br>
+            <input type="radio" name="q2" value="correct"> At a concert<br>
+            <input type="radio" name="q2" value="wrong"> In school<br>
+        </div>
+
+        <!-- Add more questions similarly -->
+
+        <button type="button" onclick="calculateScore()">Submit</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        // Hardcoded correct answers
+        const answers = {
+            q1: "Blue",        // Correct answer for question 1
+            q2: "At a concert" // Correct answer for question 2
+        };
+
+        function calculateScore() {
+            const quizForm = document.getElementById('quizForm');
+            const resultDiv = document.getElementById('result');
+            let score = 0;
+            let totalQuestions = Object.keys(answers).length;
+
+            // Loop through each question to check answers
+            for (const [question, correctAnswer] of Object.entries(answers)) {
+                const selected = quizForm.querySelector(`input[name="${question}"]:checked`);
+                if (selected && selected.value === correctAnswer) {
+                    score++;
+                }
+            }
+
+            // Calculate score percentage
+            const scorePercent = (score / totalQuestions) * 100;
+            let feedback = '';
+
+            // Feedback based on the score percentage
+            if (scorePercent === 100) {
+                feedback = `🎉 Amazing! You know each other perfectly! ❤️`;
+            } else if (scorePercent >= 70) {
+                feedback = `😊 Great job! You know each other quite well!`;
+            } else if (scorePercent >= 40) {
+                feedback = `🙂 Not bad, but there's room to learn more about each other!`;
+            } else {
+                feedback = `😅 Uh-oh! Looks like you have some work to do!`;
+            }
+
+            // Display the result with feedback and emojis
+            resultDiv.innerHTML = `<p>You scored ${scorePercent}%</p><p>${feedback}</p>`;
+        }
+    </script>
+</body>
+</html>
